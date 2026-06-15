@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Lernteufel</title>
+<meta name="description" content="Karteikarten lernen — und wenn du keinen Bock mehr hast, Level Devil spielen.">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#16181F">
+<link rel="icon" href="icons/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+
+  <header class="topbar">
+    <div class="brand"><img src="icons/icon-192.png" alt=""> Lernteufel</div>
+    <div class="spacer"></div>
+    <button class="icon-btn" id="theme-toggle" aria-label="Hell/Dunkel umschalten">🌙</button>
+  </header>
+
+  <!-- HOME -->
+  <main class="view" id="view-home">
+    <h2 class="title">Deine Decks</h2>
+    <p class="subtitle">Wähle ein Deck zum Lernen oder leg ein neues an.</p>
+    <div id="deck-list"></div>
+    <button class="btn btn-ghost btn-block" id="new-deck" style="margin-top:6px;">+ Neues Deck</button>
+
+    <div class="devil-card" id="home-devil">
+      <span class="emoji">😈</span>
+      <div>
+        <b>Keine Lust mehr?</b>
+        <p>Mach Pause mit Level Devil — aber Vorsicht, der Level spielt nicht fair.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- STUDY -->
+  <main class="view hidden" id="view-study">
+    <div class="study-head">
+      <button class="icon-btn" id="study-back" aria-label="Zurück">←</button>
+      <div class="progress"><i id="study-progress"></i></div>
+      <span class="counter" id="study-counter">0 / 0</span>
+    </div>
+
+    <div id="study-body">
+      <div class="flip" id="flip">
+        <div class="flip-inner">
+          <div class="face front"><span class="tag">Frage</span><div class="content" id="card-front"></div><span class="hint">Tippen zum Umdrehen</span></div>
+          <div class="face back"><span class="tag">Antwort</span><div class="content" id="card-back"></div></div>
+        </div>
+      </div>
+      <div class="answer-row" id="answer-row" style="visibility:hidden;">
+        <button class="btn btn-ghost" id="again">Nochmal</button>
+        <button class="btn btn-good" id="known">Gewusst ✓</button>
+      </div>
+    </div>
+
+    <div id="study-end" class="session-end hidden">
+      <div class="big">🎉</div>
+      <h2 class="title">Durch!</h2>
+      <p class="subtitle" id="end-stats"></p>
+      <div class="btn-row" style="justify-content:center;">
+        <button class="btn btn-primary" id="restart-session">Nochmal lernen</button>
+        <button class="btn btn-ghost" id="end-home">Zu den Decks</button>
+      </div>
+    </div>
+
+    <button class="btn btn-devil btn-block" id="study-devil" style="margin-top:22px;">😈 Keine Lust mehr — Level Devil</button>
+  </main>
+
+  <!-- EDIT -->
+  <main class="view hidden" id="view-edit">
+    <div class="study-head">
+      <button class="icon-btn" id="edit-back" aria-label="Zurück">←</button>
+      <span class="counter">Deck bearbeiten</span>
+      <span style="width:40px;"></span>
+    </div>
+    <input class="field" id="deck-name" placeholder="Deck-Name" style="font-weight:600;font-size:17px;">
+    <div id="card-edit-list"></div>
+    <button class="btn btn-ghost btn-block" id="add-card">+ Karte hinzufügen</button>
+    <div class="btn-row" style="margin-top:18px;">
+      <button class="btn btn-primary" id="edit-study">Lernen starten</button>
+      <button class="btn btn-devil" id="delete-deck">Deck löschen</button>
+    </div>
+  </main>
+
+  <!-- GAME -->
+  <main class="view hidden" id="view-game">
+    <div class="game-head">
+      <button class="icon-btn" id="game-back" aria-label="Zurück zum Lernen">←</button>
+      <span class="game-stat">Level <b id="g-level">1</b></span>
+      <span class="game-stat">Tode <b id="g-deaths">0</b></span>
+      <div class="spacer"></div>
+      <span class="game-stat" id="g-hint">← → laufen · ↑ springen</span>
+    </div>
+    <div class="game-wrap">
+      <canvas id="game-canvas" width="1440" height="810"></canvas>
+      <div class="game-overlay" id="game-overlay">
+        <h3 id="ov-title">Level Devil 😈</h3>
+        <p id="ov-text">Erreiche die Tür. Klingt einfach. Ist es nicht.</p>
+        <button class="btn btn-primary" id="ov-btn">Los</button>
+      </div>
+      <div class="touch-controls" id="touch-controls">
+        <div class="tc-group">
+          <button class="tc" id="tc-left">←</button>
+          <button class="tc" id="tc-right">→</button>
+        </div>
+        <div class="tc-group">
+          <button class="tc" id="tc-jump">⤴</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+</div>
+
+<script src="js/game.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
